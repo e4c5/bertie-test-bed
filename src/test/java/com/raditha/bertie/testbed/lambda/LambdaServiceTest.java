@@ -1,5 +1,6 @@
 package com.raditha.bertie.testbed.lambda;
 
+import com.raditha.bertie.testbed.model.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -10,7 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class LambdaService {
+public class LambdaServiceTest {
 
     public void testProcessJane_usesCorrectValues() {
         var userRepository = mock(UserRepository.class);
@@ -48,11 +49,12 @@ public class LambdaService {
         assertEquals("user", savedUser.getRole());
     }
 
-    // Stub classes
+    // Mock interface needed since real one wasn't found
     interface UserRepository {
-        Object save(Object o);
+        User save(User o);
     }
 
+    // Simple service wrapper for test
     class Service {
         Service(UserRepository r) {
         }
@@ -63,24 +65,6 @@ public class LambdaService {
 
         String processJohn() {
             return "John";
-        }
-    }
-
-    class User {
-        String getName() {
-            return "";
-        }
-
-        String getEmail() {
-            return "";
-        }
-
-        boolean isActive() {
-            return true;
-        }
-
-        String getRole() {
-            return "";
         }
     }
 }
