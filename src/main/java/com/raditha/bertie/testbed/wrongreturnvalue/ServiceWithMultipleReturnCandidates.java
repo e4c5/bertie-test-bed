@@ -14,16 +14,17 @@ import com.raditha.bertie.testbed.repository.Repository;
  * data flow analysis, it may return 'tempUser' instead of 'finalUser',
  * causing tests to fail with incorrect data.
  * 
- * CRITICAL: Must use data flow analysis, not just "first variable of matching type".
+ * CRITICAL: Must use data flow analysis, not just "first variable of matching
+ * type".
  */
 public class ServiceWithMultipleReturnCandidates {
-    
+
     private final Repository<User> repository;
-    
+
     public ServiceWithMultipleReturnCandidates(Repository<User> repository) {
         this.repository = repository;
     }
-    
+
     /**
      * Has TWO User variables - must return the one that's used later (finalUser)
      */
@@ -31,15 +32,15 @@ public class ServiceWithMultipleReturnCandidates {
         User tempUser = new User();
         tempUser.setId("temp");
         tempUser.setName("Temporary");
-        
+
         User finalUser = repository.findById(userId);
         finalUser.setActive(true);
         finalUser.save();
-        
+
         // Uses finalUser, not tempUser!
         return finalUser.getName() + " is now active";
     }
-    
+
     /**
      * Similar duplicate - also has TWO User variables
      */
@@ -47,15 +48,15 @@ public class ServiceWithMultipleReturnCandidates {
         User tempUser = new User();
         tempUser.setId("temp");
         tempUser.setName("Temporary");
-        
+
         User finalUser = repository.findById(userId);
         finalUser.setActive(true);
         finalUser.save();
-        
+
         // Uses finalUser, not tempUser!
-        return finalUser.getEmail() + " was updated";
+        return String.format("%s was updated", finalUser.getEmail());
     }
-    
+
     /**
      * Yet another duplicate with same pattern
      */
@@ -63,15 +64,19 @@ public class ServiceWithMultipleReturnCandidates {
         User tempUser = new User();
         tempUser.setId("temp");
         tempUser.setName("Temporary");
-        
+
         User finalUser = repository.findById(userId);
         finalUser.setActive(true);
         finalUser.save();
-        
+
         // Uses finalUser, not tempUser!
-        return "User " + finalUser.getId() + " processed";
+        StringBuilder sb = new StringBuilder();
+        sb.append("User ");
+        sb.append(finalUser.getId());
+        sb.append(" processed");
+        return sb.toString();
     }
-    
+
     /**
      * Duplicate where NO variable is used after (should return void)
      */
@@ -79,10 +84,10 @@ public class ServiceWithMultipleReturnCandidates {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();
-        
+
         // No variable used after this point
     }
-    
+
     /**
      * Another duplicate where NO variable is used after
      */
@@ -90,7 +95,7 @@ public class ServiceWithMultipleReturnCandidates {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();
-        
+
         // No variable used after this point
     }
 }
