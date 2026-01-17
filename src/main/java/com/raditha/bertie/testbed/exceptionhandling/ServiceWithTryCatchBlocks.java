@@ -154,4 +154,30 @@ public class ServiceWithTryCatchBlocks {
             return doubled;
         }
     }
+
+    public double calculateWithIfElse(int[] numbers) {
+        if (numbers.length == 5) {
+            // Duplicate code block starts here
+            int sum = 0;
+            for (int num : numbers) {
+                if (num > 0) {
+                    sum += num;
+                }
+            }
+            int doubled = sum * 2;
+            // Duplicate code block ends here
+            return doubled;
+        } else {
+            // Duplicate code block starts here
+            int sum = 0;
+            for (int num : numbers) {
+                if (num > 0) {
+                    sum += num;
+                }
+            }
+            int doubled = sum * 2;
+            // Duplicate code block ends here
+            return doubled * 10; // Different final step
+        }
+    }
 }

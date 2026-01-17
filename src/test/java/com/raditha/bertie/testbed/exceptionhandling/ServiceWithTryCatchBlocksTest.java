@@ -148,4 +148,46 @@ class ServiceWithTryCatchBlocksTest {
         // CRITICAL: After refactoring the duplicate code in try/catch blocks,
         // this method should still work correctly and NOT throw any exceptions
     }
+
+    @Test
+    void testCalculateWithIfElse_arrayOfFive() {
+        // Test when array length is exactly 5 (if branch)
+        int[] numbers = { 1, 2, 3, 4, 5 };
+        double result = service.calculateWithIfElse(numbers);
+        // Sum of 1+2+3+4+5 = 15, doubled = 30
+        assertEquals(30.0, result, "Array of 5: sum 15, doubled 30");
+
+        // Test with 5 elements including negatives
+        int[] mixed = { -5, 3, -2, 7, 4 };
+        result = service.calculateWithIfElse(mixed);
+        // Only positive: 3+7+4 = 14, doubled = 28
+        assertEquals(28.0, result, "Array of 5 with negatives: sum 14, doubled 28");
+    }
+
+    @Test
+    void testCalculateWithIfElse_arrayNotFive() {
+        // Test when array length is not 5 (else branch)
+        int[] numbers = { 1, 2, 3 };
+        double result = service.calculateWithIfElse(numbers);
+        // Sum of 1+2+3 = 6, doubled = 12, * 10 = 120
+        assertEquals(120.0, result, "Array of 3: sum 6, doubled 12, * 10 = 120");
+
+        // Test with larger array
+        int[] largerArray = { 10, 20, 30, 40 };
+        result = service.calculateWithIfElse(largerArray);
+        // Sum = 100, doubled = 200, * 10 = 2000
+        assertEquals(2000.0, result, "Array of 4: sum 100, doubled 200, * 10 = 2000");
+
+        // Test with single element
+        int[] single = { 7 };
+        result = service.calculateWithIfElse(single);
+        // Sum = 7, doubled = 14, * 10 = 140
+        assertEquals(140.0, result, "Single element: sum 7, doubled 14, * 10 = 140");
+
+        // Test with empty array
+        int[] empty = {};
+        result = service.calculateWithIfElse(empty);
+        assertEquals(0.0, result, "Empty array: sum 0, doubled 0, * 10 = 0");
+    }
+
 }
