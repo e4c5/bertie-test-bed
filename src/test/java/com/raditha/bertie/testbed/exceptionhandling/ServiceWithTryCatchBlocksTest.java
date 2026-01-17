@@ -111,4 +111,41 @@ class ServiceWithTryCatchBlocksTest {
 
         // CRITICAL: After refactoring, all three patterns must still work!
     }
+
+    @Test
+    void testCalculateWithTryCatch_normalCase() {
+        // Test the normal execution path (try block)
+        // The method has duplicate code in both try and catch blocks
+
+        int[] numbers = { 1, 2, 3, 4, 5 };
+        double result = service.calculateWithTryCatch(numbers);
+        // Sum of 1+2+3+4+5 = 15, doubled = 30, * 10 = 300
+        assertEquals(300.0, result, "Normal case: sum 15, doubled 30, * 10 = 300");
+
+        // Test with only positive numbers
+        int[] positiveOnly = { 10, 20, 30 };
+        result = service.calculateWithTryCatch(positiveOnly);
+        // Sum of 10+20+30 = 60, doubled = 120, * 10 = 1200
+        assertEquals(1200.0, result, "Positive numbers: sum 60, doubled 120, * 10 = 1200");
+
+        // Test with mixed positive and negative numbers
+        int[] mixed = { -5, 3, -2, 7, 0, 4 };
+        result = service.calculateWithTryCatch(mixed);
+        // Only positive: 3+7+4 = 14, doubled = 28, * 10 = 280
+        assertEquals(280.0, result, "Mixed numbers: only positive counted");
+
+        // Test with all negative numbers (sum = 0)
+        int[] allNegative = { -1, -2, -3 };
+        result = service.calculateWithTryCatch(allNegative);
+        // Sum = 0, doubled = 0, * 10 = 0
+        assertEquals(0.0, result, "All negative: sum 0, doubled 0, * 10 = 0");
+
+        // Test with empty array
+        int[] empty = {};
+        result = service.calculateWithTryCatch(empty);
+        assertEquals(0.0, result, "Empty array: sum 0, doubled 0, * 10 = 0");
+
+        // CRITICAL: After refactoring the duplicate code in try/catch blocks,
+        // this method should still work correctly and NOT throw any exceptions
+    }
 }
