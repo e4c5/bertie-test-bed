@@ -129,4 +129,29 @@ public class ServiceWithTryCatchBlocks {
         // Duplicate code block ends here
         return doubled * 10; // Different final step
     }
+
+    public double calculateWithTryCatch(int[] numbers) {
+        try {
+            int sum = 0;
+            for (int num : numbers) {
+                if (num > 0) {
+                    sum += num;
+                }
+            }
+            int doubled = sum * 2;
+            // Duplicate code block ends here
+            return doubled * 10; // Different final step
+        } catch (Exception e) {
+            // Duplicate code block starts here
+            int sum = 0;
+            for (int num : numbers) {
+                if (num > 0) {
+                    sum += num;
+                }
+            }
+            int doubled = sum * 2;
+            // Duplicate code block ends here
+            return doubled;
+        }
+    }
 }
