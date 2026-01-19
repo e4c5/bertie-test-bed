@@ -399,4 +399,46 @@ class AquariumServiceImplTest {
         verify(fishRepository, times(1)).findById(1L);
         verify(fishRepository, times(1)).save(any());
     }
+
+    /**
+     * Business related test: Advanced Health Profile Setup.
+     * Designed to be extracted into a helper method.
+     */
+    @Test
+    void setupAdvancedHealthProfile() {
+        FishDTO healthTracker;
+        System.out.println("Health Profile Preamble: Initializing");
+
+        // DUPLICATED BLOCK: Health Profile Setup
+        healthTracker = new FishDTO();
+        healthTracker.setFishId(9001L);
+        healthTracker.setIsHealthy(true);
+        healthTracker.setWeight(1.2);
+        healthTracker.setFeedType("Premium Mix");
+        healthTracker.setName("HealthyOne");
+        // END DUPLICATED BLOCK
+
+        System.out.println("Health Profile Postamble: Profile for " + healthTracker.getName());
+    }
+
+    /**
+     * Second instance of the health profile setup.
+     */
+    @Test
+    void setupAlternativeHealthProfile() {
+        FishDTO healthTracker;
+        System.out.println("Health Profile Preamble: Alternative start");
+
+        // DUPLICATED BLOCK: Health Profile Setup
+        healthTracker = new FishDTO();
+        healthTracker.setFishId(9001L);
+        healthTracker.setIsHealthy(true);
+        healthTracker.setWeight(1.2);
+        healthTracker.setFeedType("Premium Mix");
+        healthTracker.setName("HealthyOne");
+        // END DUPLICATED BLOCK
+
+        assertNotNull(healthTracker);
+        assertTrue(healthTracker.getIsHealthy());
+    }
 }
