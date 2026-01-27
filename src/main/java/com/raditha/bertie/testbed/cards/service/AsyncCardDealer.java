@@ -14,66 +14,61 @@ import java.util.List;
  */
 public class AsyncCardDealer {
 
-    private final Deck deck;
+    private Deck deck;
 
     public AsyncCardDealer() {
         this.deck = new Deck();
     }
 
     /**
-     * Deals cards to players.
-     * DUPLICATE CODE BLOCK - same as SyncCardDealer.dealToPlayers
-     * BUT has @Async annotation while SyncCardDealer does not.
+     * Deals cards to a single player.
+     * DUPLICATE with SyncCardDealer.dealCards - but @Async mismatch!
      */
     @Async
-    public List<List<Card>> dealToPlayers(int playerCount, int cardsPerPlayer) {
-        List<List<Card>> hands = new ArrayList<>();
-        for (int i = 0; i < playerCount; i++) {
-            List<Card> hand = new ArrayList<>();
-            for (int j = 0; j < cardsPerPlayer; j++) {
-                Card card = deck.draw();
-                if (card != null) {
-                    hand.add(card);
-                }
-            }
-            hands.add(hand);
-        }
-        return hands;
-    }
-
-    /**
-     * Shuffles and deals a fresh hand.
-     * DUPLICATE CODE BLOCK - same as SyncCardDealer.shuffleAndDeal
-     * BUT has @Async annotation while SyncCardDealer does not.
-     */
-    @Async
-    public List<Card> shuffleAndDeal(int cardCount) {
-        deck.reset();
-        deck.shuffle();
+    public List<Card> dealCards(int cardCount) {
         List<Card> hand = new ArrayList<>();
-        for (int i = 0; i < cardCount; i++) {
+        int dealt = 0;
+        while (dealt < cardCount) {
             Card card = deck.draw();
             if (card != null) {
                 hand.add(card);
+                dealt = dealt + 1;
+            } else {
+                break;
             }
         }
+        System.out.println("Dealt " + dealt + " cards");
         return hand;
     }
 
     /**
-     * Calculates total deck value remaining.
-     * DUPLICATE CODE BLOCK - same as SyncCardDealer.calculateRemainingValue
+     * Resets and shuffles the deck.
+     * DUPLICATE with SyncCardDealer.resetDeck - but @Async mismatch!
      */
     @Async
-    public int calculateRemainingValue() {
-        int total = 0;
+    public void resetDeck() {
+        deck = new Deck();
+        deck.shuffle();
+        int remaining = deck.remaining();
+        System.out.println("Deck reset with " + remaining + " cards");
+        System.out.println("Ready to deal");
+    }
+
+    /**
+     * Counts remaining cards by color.
+     * DUPLICATE with SyncCardDealer.countByColor - but @Async mismatch!
+     */
+    @Async
+    public int countRedRemaining() {
         Deck tempDeck = new Deck();
+        int redCount = 0;
         while (!tempDeck.isEmpty()) {
             Card card = tempDeck.draw();
-            if (card != null) {
-                total += card.getValue();
+            if (card != null && card.isRed()) {
+                redCount = redCount + 1;
             }
         }
-        return total;
+        System.out.println("Red cards: " + redCount);
+        return redCount;
     }
 }

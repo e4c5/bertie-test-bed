@@ -2,9 +2,7 @@ package com.raditha.bertie.testbed.cards.service;
 
 import com.raditha.bertie.testbed.cards.model.Card;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Card statistics service without caching. Does NOT use @Cacheable annotation.
@@ -15,75 +13,63 @@ public class DirectCardStatistics {
 
     /**
      * Counts face cards in hand.
-     * DUPLICATE CODE BLOCK - same as CachedCardStatistics.countFaceCards
-     * BUT does NOT have @Cacheable annotation while CachedCardStatistics does.
+     * DUPLICATE with CachedCardStatistics.countFaceCards - but NO @Cacheable here!
      */
     public int countFaceCards(List<Card> hand) {
         int count = 0;
         for (Card card : hand) {
             if (card.isFaceCard()) {
-                count++;
+                count = count + 1;
             }
         }
+        System.out.println("Face card count: " + count);
         return count;
     }
 
     /**
      * Counts red cards in hand.
-     * DUPLICATE CODE BLOCK - same as CachedCardStatistics.countRedCards
-     * BUT does NOT have @Cacheable annotation while CachedCardStatistics does.
+     * DUPLICATE with CachedCardStatistics.countRedCards - but NO @Cacheable here!
      */
     public int countRedCards(List<Card> hand) {
         int count = 0;
         for (Card card : hand) {
             if (card.isRed()) {
-                count++;
+                count = count + 1;
             }
         }
+        System.out.println("Red card count: " + count);
         return count;
     }
 
     /**
-     * Groups cards by suit.
-     * DUPLICATE CODE BLOCK - same as CachedCardStatistics.groupBySuit
-     * BUT does NOT have @Cacheable annotation while CachedCardStatistics does.
+     * Calculates total hand value.
+     * DUPLICATE with CachedCardStatistics.calculateTotal - but NO @Cacheable here!
      */
-    public Map<Card.Suit, Integer> groupBySuit(List<Card> hand) {
-        Map<Card.Suit, Integer> groups = new HashMap<>();
+    public int calculateTotal(List<Card> hand) {
+        int total = 0;
         for (Card card : hand) {
-            Card.Suit suit = card.getSuit();
-            groups.put(suit, groups.getOrDefault(suit, 0) + 1);
+            int value = card.getValue();
+            total = total + value;
         }
-        return groups;
+        System.out.println("Total value: " + total);
+        return total;
     }
 
     /**
-     * Finds highest value card.
-     * DUPLICATE CODE BLOCK - same as CachedCardStatistics.findHighestCard
+     * Finds the highest card.
+     * DUPLICATE with CachedCardStatistics.findHighest - but NO @Cacheable here!
      */
-    public Card findHighestCard(List<Card> hand) {
+    public Card findHighest(List<Card> hand) {
         Card highest = null;
-        int highestValue = -1;
+        int maxValue = 0;
         for (Card card : hand) {
-            if (card.getValue() > highestValue) {
-                highestValue = card.getValue();
+            int value = card.getValue();
+            if (value > maxValue) {
+                maxValue = value;
                 highest = card;
             }
         }
+        System.out.println("Highest card value: " + maxValue);
         return highest;
-    }
-
-    /**
-     * Calculates average card value.
-     */
-    public double calculateAverageValue(List<Card> hand) {
-        if (hand.isEmpty()) {
-            return 0.0;
-        }
-        int total = 0;
-        for (Card card : hand) {
-            total += card.getValue();
-        }
-        return (double) total / hand.size();
     }
 }
