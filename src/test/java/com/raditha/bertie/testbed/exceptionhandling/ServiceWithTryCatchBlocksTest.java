@@ -150,6 +150,34 @@ class ServiceWithTryCatchBlocksTest {
     }
 
     @Test
+    void testCalculateWithTryCatch_exceptionPath() {
+        // Trigger NPE by passing null, which should be caught by "catch (Exception e)"
+        // The catch block has duplicate logic that sums the numbers (if they existed)
+        // Here, it will jump to catch, where 'numbers' is still null, so accessing it there presumably
+        // also throws NPE? Wait, let's check the code.
+        // The catch block does:
+        // int sum = 0;
+        // for (int num : numbers) { ... }
+        // If numbers is null, the try block throws NPE.
+        // The catch block catches Exception (including NPE).
+        // Then inside catch, it tries to loop over 'numbers' again.
+        // If 'numbers' is null, it will throw NPE *again* from the catch block!
+        // So passing null might just crash.
+        //
+        // Let's verify the code:
+        // public double calculateWithTryCatch(int[] numbers) {
+        //    try { ... for (int num : numbers) ... }
+        //    catch (Exception e) { ... for (int num : numbers) ... }
+        // }
+        // Yes, if numbers is null, it crashes in catch too.
+        // So we cannot use null to test the catch block safely unless we want it to throw.
+        //
+        // BUT, the goal is coverage. If we let it throw, we cover the catch line.
+        
+        assertThrows(NullPointerException.class, () -> service.calculateWithTryCatch(null));
+    }
+
+    @Test
     void testCalculateWithIfElse_arrayOfFive() {
         // Test when array length is exactly 5 (if branch)
         int[] numbers = { 1, 2, 3, 4, 5 };

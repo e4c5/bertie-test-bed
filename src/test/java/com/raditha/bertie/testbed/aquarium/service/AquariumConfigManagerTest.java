@@ -102,6 +102,27 @@ class AquariumConfigManagerTest {
     }
 
     // ========================================================================
+    // SECTION 1.5: STATIC BACKUP INITIALIZER BLOCK TESTS
+    // ========================================================================
+    @Nested
+    @DisplayName("Static Backup Initializer Block Tests")
+    class StaticBackupInitializerTests {
+        @Test
+        @DisplayName("Should initialize backup fields")
+        void testBackupFieldsInitialized() throws Exception {
+            java.lang.reflect.Field field = AquariumConfigManager.class.getDeclaredField("BACKUP_INITIALIZED");
+            field.setAccessible(true);
+            boolean initialized = (boolean) field.get(null);
+            assertThat(initialized).isTrue();
+
+            java.lang.reflect.Field cacheField = AquariumConfigManager.class.getDeclaredField("BACKUP_CONFIG");
+            cacheField.setAccessible(true);
+            java.util.Map<?, ?> cache = (java.util.Map<?, ?>) cacheField.get(null);
+            assertThat(cache).isNotEmpty();
+        }
+    }
+
+    // ========================================================================
     // SECTION 2: INSTANCE INITIALIZER BLOCK TESTS
     // ========================================================================
     @Nested
@@ -188,6 +209,15 @@ class AquariumConfigManagerTest {
         }
 
         @Test
+        @DisplayName("FishStatus getDescription should return correct values")
+        void testFishStatusDescriptions() {
+            assertThat(AquariumConfigManager.FishStatus.HEALTHY.getDescription()).isEqualTo("Fish is healthy");
+            assertThat(AquariumConfigManager.FishStatus.SICK.getDescription()).isEqualTo("Fish is sick");
+            assertThat(AquariumConfigManager.FishStatus.QUARANTINED.getDescription()).isEqualTo("Fish is quarantined");
+            assertThat(AquariumConfigManager.FishStatus.DEAD.getDescription()).isEqualTo("Fish is dead");
+        }
+
+        @Test
         @DisplayName("FishStatus enum constructor validates code")
         void testFishStatusEnumCodeValidation() {
             for (AquariumConfigManager.FishStatus status : AquariumConfigManager.FishStatus.values()) {
@@ -224,6 +254,13 @@ class AquariumConfigManagerTest {
         void testTankTypeBrackishSupportsOsmosis() {
             AquariumConfigManager.TankType brackish = AquariumConfigManager.TankType.BRACKISH;
             assertThat(brackish.supportsSaltWater()).isTrue();
+        }
+
+        @Test
+        @DisplayName("TankType SALTWATER should support salt water")
+        void testTankTypeSaltwaterSupportsSaltWater() {
+            AquariumConfigManager.TankType saltwater = AquariumConfigManager.TankType.SALTWATER;
+            assertThat(saltwater.supportsSaltWater()).isTrue();
         }
 
         @Test

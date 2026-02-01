@@ -108,6 +108,27 @@ class TankConfigManagerTest {
     }
 
     // ========================================================================
+    // SECTION 1.5: STATIC BACKUP INITIALIZER BLOCK TESTS
+    // ========================================================================
+    @Nested
+    @DisplayName("Static Backup Initializer Block Tests")
+    class StaticBackupInitializerTests {
+        @Test
+        @DisplayName("Should initialize backup fields")
+        void testBackupFieldsInitialized() throws Exception {
+            java.lang.reflect.Field field = TankConfigManager.class.getDeclaredField("backupInitialized");
+            field.setAccessible(true);
+            boolean initialized = (boolean) field.get(null);
+            assertThat(initialized).isTrue();
+
+            java.lang.reflect.Field cacheField = TankConfigManager.class.getDeclaredField("backupConfigCache");
+            cacheField.setAccessible(true);
+            java.util.Map<?, ?> cache = (java.util.Map<?, ?>) cacheField.get(null);
+            assertThat(cache).isNotEmpty();
+        }
+    }
+
+    // ========================================================================
     // SECTION 2: INSTANCE INITIALIZER BLOCK TESTS
     // ========================================================================
     @Nested
@@ -193,6 +214,15 @@ class TankConfigManagerTest {
         }
 
         @Test
+        @DisplayName("WaterType getDescription should return correct values")
+        void testWaterTypeDescriptions() {
+            assertThat(TankConfigManager.WaterType.FRESH.getDescription()).isEqualTo("Fresh water");
+            assertThat(TankConfigManager.WaterType.SALT.getDescription()).isEqualTo("Salt water");
+            assertThat(TankConfigManager.WaterType.BRACKISH.getDescription()).isEqualTo("Brackish water");
+            assertThat(TankConfigManager.WaterType.MINERAL.getDescription()).isEqualTo("Mineral water");
+        }
+
+        @Test
         @DisplayName("WaterType enum constructor validates code")
         void testWaterTypeEnumCodeValidation() {
             for (TankConfigManager.WaterType type : TankConfigManager.WaterType.values()) {
@@ -229,6 +259,13 @@ class TankConfigManagerTest {
         void testFilterTypeBiologicalLiveFiltering() {
             TankConfigManager.FilterType bio = TankConfigManager.FilterType.BIOLOGICAL;
             assertThat(bio.supportsLiveFiltering()).isTrue();
+        }
+
+        @Test
+        @DisplayName("FilterType CHEMICAL should not support live filtering")
+        void testFilterTypeChemicalNoLiveFiltering() {
+            TankConfigManager.FilterType chemical = TankConfigManager.FilterType.CHEMICAL;
+            assertThat(chemical.supportsLiveFiltering()).isFalse();
         }
 
         @Test
