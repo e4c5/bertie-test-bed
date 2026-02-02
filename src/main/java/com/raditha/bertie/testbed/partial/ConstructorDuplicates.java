@@ -5,8 +5,8 @@ import java.util.List;
 
 public class ConstructorDuplicates {
 
-    private final List<String> items;
-    private final String name;
+    final List<String> items;
+    final String name;
 
     public ConstructorDuplicates() {
         // Sequence 1
