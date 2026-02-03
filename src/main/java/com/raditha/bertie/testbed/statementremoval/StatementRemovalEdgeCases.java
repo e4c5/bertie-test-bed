@@ -18,6 +18,7 @@ public class StatementRemovalEdgeCases {
         // Last statements in method:
         user.setActive(true);
         user.save();
+        System.out.println(user);
     }
 
     public void processCustomerAtEnd() {
@@ -26,6 +27,7 @@ public class StatementRemovalEdgeCases {
         // Last statements:
         customer.setActive(true);
         customer.save();
+        System.out.println(customer);
     }
 
     /**
@@ -38,6 +40,7 @@ public class StatementRemovalEdgeCases {
             user.setEmail("nested@example.com");
             user.setActive(true);
             user.save();
+            System.out.println(user);
         }
     }
 
@@ -47,6 +50,7 @@ public class StatementRemovalEdgeCases {
             customer.setEmail("nested@example.com");
             customer.setActive(true);
             customer.save();
+            System.out.println(customer);
         }
     }
 }
