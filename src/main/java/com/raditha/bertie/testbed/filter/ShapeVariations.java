@@ -7,6 +7,7 @@ public class ShapeVariations {
         int c = 3;
         int d = 4;
         int e = 5;
+        System.out.println(a + b + c + d + e);
     }
 
     void calculateMoreIntegers() {
@@ -15,6 +16,7 @@ public class ShapeVariations {
         int z = 3;
         int w = 4;
         int v = 5;
+        System.out.println(x + y + z + w + v);
     }
 
     void processStrings() {
@@ -23,5 +25,6 @@ public class ShapeVariations {
         String s3 = "test";
         String s4 = "example";
         String s5 = "done";
+        System.out.println(s1 + s2 + s3 + s4 + s5);
     }
 }
