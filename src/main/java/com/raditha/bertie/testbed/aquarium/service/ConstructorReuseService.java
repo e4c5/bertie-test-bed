@@ -1,9 +1,12 @@
 package com.raditha.bertie.testbed.aquarium.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConstructorReuseService {
+    private static final Logger logger = LoggerFactory.getLogger(ConstructorReuseService.class);
     private final List<String> items;
     private final String name;
 
@@ -12,6 +15,7 @@ public class ConstructorReuseService {
         this.items.add("default-item");
         this.name = "default-name";
         System.out.println("Initialized ConstructorReuseService with defaults");
+        logger.info("ConstructorReuseService default constructor called");
     }
 
     public ConstructorReuseService(String name) {
@@ -21,7 +25,8 @@ public class ConstructorReuseService {
         this.items.add("default-item");
         this.name = "default-name";
         System.out.println("Initialized ConstructorReuseService with defaults");
-        
+        logger.info("ConstructorReuseService parameterized constructor called");
+
         // Additional logic for this constructor
         System.out.println("But wait, I was called with name: " + name);
     }
