@@ -35,7 +35,7 @@ public class StatementRemovalEdgeCasesAKTest {
     void processCustomerAtEndTest() {
         StatementRemovalEdgeCases statementRemovalEdgeCases = new StatementRemovalEdgeCases();
         statementRemovalEdgeCases.processCustomerAtEnd();
-        assertEquals("User{id='null\', name='null\', email='second@example.com\', active=true, role='null\', age=0, loginCount=0}", outputStream.toString().trim());
+        assertEquals("User{id='null\', name='Second\', email='second@example.com\', active=true, role='null\', age=0, loginCount=0}", outputStream.toString().trim());
     }
 
     /**
@@ -60,7 +60,7 @@ public class StatementRemovalEdgeCasesAKTest {
         StatementRemovalEdgeCases statementRemovalEdgeCases = new StatementRemovalEdgeCases();
         boolean condition = true;
         statementRemovalEdgeCases.processCustomerInNestedBlock(condition);
-        assertEquals("User{id='null\', name='null\', email='nested@example.com\', active=true, role='null\', age=0, loginCount=0}", outputStream.toString().trim());
+        assertEquals("User{id='null\', name='NestedCustomer\', email='nested@example.com\', active=true, role='null\', age=0, loginCount=0}", outputStream.toString().trim());
     }
 
     /**
@@ -72,7 +72,7 @@ public class StatementRemovalEdgeCasesAKTest {
     void processUserAtEndTest() {
         StatementRemovalEdgeCases statementRemovalEdgeCases = new StatementRemovalEdgeCases();
         statementRemovalEdgeCases.processUserAtEnd();
-        assertEquals("User{id='null\', name='null\', email='first@example.com\', active=true, role='null\', age=0, loginCount=0}", outputStream.toString().trim());
+        assertEquals("User{id='null\', name='First\', email='first@example.com\', active=true, role='null\', age=0, loginCount=0}", outputStream.toString().trim());
     }
 
     /**
@@ -97,7 +97,7 @@ public class StatementRemovalEdgeCasesAKTest {
         StatementRemovalEdgeCases statementRemovalEdgeCases = new StatementRemovalEdgeCases();
         boolean condition = true;
         statementRemovalEdgeCases.processUserInNestedBlock(condition);
-        assertEquals("User{id='null\', name='null\', email='nested@example.com\', active=true, role='null\', age=0, loginCount=0}", outputStream.toString().trim());
+        assertEquals("User{id='null\', name='Nested\', email='nested@example.com\', active=true, role='null\', age=0, loginCount=0}", outputStream.toString().trim());
     }
 
     /**

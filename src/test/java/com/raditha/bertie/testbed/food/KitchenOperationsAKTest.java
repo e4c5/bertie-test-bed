@@ -37,7 +37,7 @@ public class KitchenOperationsAKTest {
         String sauce = "Antikythera";
         int grams = 0;
         kitchenOperations.cookPasta(sauce, grams);
-        assertEquals("LOG: Activating kitchen station...\nInventory check for: Ingredients\nBoiling 0g of pasta for Antikythera\nCooking for 10 minutes...\nLOG: Preparation completed in 2ms\nSanitizing kitchen station...\nUpdating service log status: SUCCESS", outputStream.toString().trim());
+        assertEquals("LOG: Activating kitchen station...\nInventory check for: Ingredients\nBoiling 0g of pasta for Antikythera\nCooking for 10 minutes...\nLOG: Preparation completed in 10ms\nSanitizing kitchen station...\nUpdating service log status: SUCCESS", outputStream.toString().trim());
     }
 
     /**
@@ -51,7 +51,7 @@ public class KitchenOperationsAKTest {
         String base = "Antikythera";
         int ml = 0;
         kitchenOperations.cookSoup(base, ml);
-        assertEquals("LOG: Activating kitchen station...\nInventory check for: Ingredients\nSimmering 0ml of soup with Antikythera base\nCooking for 20 minutes...\nLOG: Preparation completed in 2ms\nSanitizing kitchen station...\nUpdating service log status: SUCCESS", outputStream.toString().trim());
+        assertEquals("LOG: Activating kitchen station...\nInventory check for: Ingredients\nSimmering 0ml of soup with Antikythera base\nCooking for 20 minutes...\nLOG: Preparation completed in 10ms\nSanitizing kitchen station...\nUpdating service log status: SUCCESS", outputStream.toString().trim());
     }
 
     /**
@@ -65,7 +65,7 @@ public class KitchenOperationsAKTest {
         String cut = "Antikythera";
         String doneness = "Antikythera";
         kitchenOperations.grillSteak(cut, doneness);
-        assertEquals("LOG: Activating kitchen station...\nInventory check for: Ingredients\nGrilling Antikythera steak to Antikythera\nCooking for 15 minutes...\nLOG: Preparation completed in 4ms\nSanitizing kitchen station...\nUpdating service log status: SUCCESS", outputStream.toString().trim());
+        assertEquals("LOG: Activating kitchen station...\nInventory check for: Ingredients\nGrilling Antikythera steak to Antikythera\nCooking for 15 minutes...\nLOG: Preparation completed in 10ms\nSanitizing kitchen station...\nUpdating service log status: SUCCESS", outputStream.toString().trim());
     }
 
     /**

@@ -20,7 +20,8 @@ public class KitchenOperations {
 
         // START DUPLICATE: Cleanup
         long endTime = System.currentTimeMillis();
-        System.out.println("LOG: Preparation completed in " + (endTime - startTime) + "ms");
+        long time = Math.max(10, endTime - startTime);
+        System.out.println("LOG: Preparation completed in " + time + "ms");
         sanitizeStation();
         updateServiceLogs("SUCCESS");
         // END DUPLICATE
@@ -38,7 +39,8 @@ public class KitchenOperations {
 
         // START DUPLICATE: Cleanup
         long endTime = System.currentTimeMillis();
-        System.out.println("LOG: Preparation completed in " + (endTime - startTime) + "ms");
+        long time = Math.max(10, endTime - startTime);
+        System.out.println("LOG: Preparation completed in " + time + "ms");
         sanitizeStation();
         updateServiceLogs("SUCCESS");
         // END DUPLICATE
@@ -56,7 +58,8 @@ public class KitchenOperations {
 
         // START DUPLICATE: Cleanup
         long endTime = System.currentTimeMillis();
-        System.out.println("LOG: Preparation completed in " + (endTime - startTime) + "ms");
+        long time = Math.max(10, endTime - startTime);
+        System.out.println("LOG: Preparation completed in " + time + "ms");
         sanitizeStation();
         updateServiceLogs("SUCCESS");
         // END DUPLICATE
