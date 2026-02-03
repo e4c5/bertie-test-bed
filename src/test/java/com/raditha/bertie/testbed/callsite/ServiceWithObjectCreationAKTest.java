@@ -93,4 +93,11 @@ public class ServiceWithObjectCreationAKTest {
         String resp = taxDetails.toString();
         assertEquals("TaxDetails{ids=null}", resp);
     }
+
+    @Test
+    void testProcessIncome2() {
+        ServiceWithObjectCreation service = new ServiceWithObjectCreation();
+        // Should not throw exception
+        assertDoesNotThrow(() -> service.processIncome2());
+    }
 }
