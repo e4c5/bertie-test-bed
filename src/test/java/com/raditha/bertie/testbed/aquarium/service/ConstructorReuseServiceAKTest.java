@@ -35,7 +35,9 @@ public class ConstructorReuseServiceAKTest {
     void ConstructorTest() {
         String name = "Antikythera";
         new ConstructorReuseService(name);
-        assertTrue( outputStream.toString().contains("Initialized ConstructorReuseService with defaults"));
+        String[] lines = outputStream.toString().split("\n");
+        assertEquals("Initialized ConstructorReuseService with defaults", lines[0]);
+        assertEquals(3, lines.length);
     }
 
     /**
