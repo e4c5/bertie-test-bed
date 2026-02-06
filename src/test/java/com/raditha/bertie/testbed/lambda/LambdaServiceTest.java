@@ -11,6 +11,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * This class is suppiosed to closely resemble the UserServiceWithDifferentValuesTest,
+ * but it should not end up being refactored because the types are different.
+ */
 public class LambdaServiceTest {
 
     public void testProcessJane_usesCorrectValues() {
