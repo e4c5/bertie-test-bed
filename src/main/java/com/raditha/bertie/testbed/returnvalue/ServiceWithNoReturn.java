@@ -20,7 +20,7 @@ public class ServiceWithNoReturn {
     /**
      * DUPLICATE 1: Creates user, but doesn't use it after
      */
-    public void processUser1(String userId) {
+    public void processUser1(long userId) {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();
@@ -32,7 +32,7 @@ public class ServiceWithNoReturn {
     /**
      * DUPLICATE 2: Same pattern - no variable usage after
      */
-    public void processUser2(String userId) {
+    public void processUser2(long userId) {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();
@@ -44,7 +44,7 @@ public class ServiceWithNoReturn {
     /**
      * DUPLICATE 3: Same pattern
      */
-    public void processUser3(String userId) {
+    public void processUser3(long userId) {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();

@@ -1,80 +1,67 @@
 package com.raditha.bertie.testbed.containers;
 
-import com.raditha.bertie.testbed.model.User;
+import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
- * Test class for detecting duplicate code across method and nested lambda scopes.
- * Tests cross-scope duplicate detection and nested scope resolution.
+ * Test file for duplicate detection across method and nested lambda scopes.
+ * Demonstrates cross-container duplicate detection and nested scope resolution.
  */
 public class NestedLambdaDups {
     
-    public List<String> processUsers(List<User> users) {
-        // Duplicate Block 1 - In method scope
-        if (users == null || users.isEmpty()) {
-            throw new IllegalArgumentException("Users list cannot be null or empty");
-        }
+    public List<String> processItems(List<String> items) {
+        // DUPLICATE BLOCK START - In method
+        String prefix = "ITEM_";
+        int minLength = 3;
+        String suffix = "_PROCESSED";
+        String formatted = prefix + minLength + suffix;
+        System.out.println("Format: " + formatted);
+        // DUPLICATE BLOCK END
         
-        // Lambda that captures from enclosing method
-        Function<User, String> formatter = (user) -> {
-            // Duplicate Block 2 - In lambda scope (similar to Block 1)
-            if (user.getName() == null || user.getName().isEmpty()) {
-                throw new IllegalArgumentException("Users list cannot be null or empty");
-            }
-            return user.getName() + " <" + user.getEmail() + ">";
-        };
-        
-        return users.stream().map(formatter).toList();
-    }
-    
-    public List<String> transformUsers(List<User> users) {
-        // Duplicate Block 3 - In method scope (similar to Block 1)
-        if (users == null || users.isEmpty()) {
-            throw new IllegalArgumentException("Users list cannot be null or empty");
-        }
-        
-        // Nested lambda with similar logic
-        Function<User, String> transformer = (user) -> {
-            // Duplicate Block 4 - In lambda scope
-            if (user.getEmail() == null || user.getEmail().isEmpty()) {
-                throw new IllegalArgumentException("Users list cannot be null or empty");
-            }
-            return user.getEmail() + " - " + user.getStatus();
-        };
-        
-        return users.stream().map(transformer).toList();
-    }
-    
-    public void updateUsers(List<User> users) {
-        // Duplicate Block 5 - In method scope
-        if (users == null || users.isEmpty()) {
-            throw new IllegalArgumentException("Users list cannot be null or empty");
-        }
-        
-        users.forEach(user -> {
-            // Duplicate Block 6 - In lambda scope
-            if (user.getTag() == null || user.getTag().isEmpty()) {
-                throw new IllegalArgumentException("Users list cannot be null or empty");
-            }
-            user.setLastModified(System.currentTimeMillis());
-        });
-    }
-    
-    public List<User> filterAndMap(List<User> users) {
-        // Duplicate Block 7 - In method scope
-        if (users == null || users.isEmpty()) {
-            throw new IllegalArgumentException("Users list cannot be null or empty");
-        }
-        
-        return users.stream()
-            .filter(user -> {
-                // Duplicate Block 8 - In nested lambda
-                if (user.getStatus() == null || user.getStatus().isEmpty()) {
-                    throw new IllegalArgumentException("Users list cannot be null or empty");
-                }
-                return "ACTIVE".equals(user.getStatus());
+        // Lambda with nested duplicate
+        return items.stream()
+            .map(item -> {
+                // DUPLICATE BLOCK START - In lambda
+                String prefix2 = "ITEM_";
+                int minLength2 = 3;
+                String suffix2 = "_PROCESSED";
+                String formatted2 = prefix2 + minLength2 + suffix2;
+                System.out.println("Format: " + formatted2);
+                // DUPLICATE BLOCK END
+                return item.toUpperCase();
             })
-            .toList();
+            .collect(Collectors.toList());
+    }
+    
+    public void filterAndProcess() {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+        
+        numbers.stream()
+            .filter(n -> {
+                // Duplicate in filter lambda
+                String prefix = "ITEM_";
+                int minLength = 3;
+                String suffix = "_PROCESSED";
+                String formatted = prefix + minLength + suffix;
+                System.out.println("Format: " + formatted);
+                return n > 2;
+            })
+            .forEach(n -> System.out.println(n));
+    }
+    
+    public void anotherMethod() {
+        // Duplicate in another method
+        String prefix = "ITEM_";
+        int minLength = 3;
+        String suffix = "_PROCESSED";
+        String formatted = prefix + minLength + suffix;
+        System.out.println("Format: " + formatted);
+    }
+    
+    public static void main(String[] args) {
+        NestedLambdaDups test = new NestedLambdaDups();
+        test.processItems(Arrays.asList("a", "b", "c"));
+        test.filterAndProcess();
     }
 }

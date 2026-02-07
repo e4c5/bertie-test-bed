@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public interface Repository<T> {
 
-    void save(T entity);
+    T save(T entity);
 
     T findById(Long id);
 

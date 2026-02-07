@@ -1,69 +1,67 @@
 package com.raditha.bertie.testbed.containers;
 
-import com.raditha.bertie.testbed.model.User;
-import com.raditha.bertie.testbed.model.Database;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Test class for detecting duplicate code in instance initializer blocks.
- * Contains intentional duplicates that should be detected and refactored.
+ * Test file for duplicate detection in instance initializer blocks.
+ * Demonstrates INSTANCE_INITIALIZER container type support.
  */
 public class InstanceInitializerDups {
     
-    private User user;
-    private Database database;
-    private String sessionId;
+    private Map<String, Object> properties = new HashMap<>();
+    private String instanceId;
+    private long createdAt;
     
-    // Instance initializer with duplicate setup logic
+    // Instance initializer block #1 with duplicate code
     {
-        user = new User();
-        
-        // Duplicate Block 1
-        user.setName("DefaultUser");
-        user.setEmail("user@example.com");
-        user.setStatus("PENDING");
-        user.validate();
-        user.save();
+        // DUPLICATE BLOCK START
+        properties.put("version", "1.0");
+        properties.put("active", true);
+        properties.put("timeout", 30);
+        instanceId = "instance-" + System.currentTimeMillis();
+        createdAt = System.currentTimeMillis();
+        System.out.println("Instance initialized with " + properties.size() + " properties");
+        // DUPLICATE BLOCK END
     }
     
-    // Another instance initializer with similar setup
+    // Instance initializer block #2 with duplicate code
     {
-        database = new Database();
-        
-        // Duplicate Block 2 (similar to Block 1)
-        database.setHost("localhost");
-        database.setPort(5432);
-        database.setDatabase("testdb");
-        database.connect("jdbc:postgresql://localhost:5432/testdb");
-        database.enablePooling();
-    }
-    
-    // Third instance initializer
-    {
-        sessionId = java.util.UUID.randomUUID().toString();
-        
-        // Duplicate Block 3 (similar pattern)
-        sessionId = sessionId.trim();
-        sessionId = sessionId.toUpperCase();
-        sessionId = sessionId.substring(0, 8);
+        // DUPLICATE BLOCK START
+        properties.put("version", "1.0");
+        properties.put("active", true);
+        properties.put("timeout", 30);
+        instanceId = "instance-" + System.currentTimeMillis();
+        createdAt = System.currentTimeMillis();
+        System.out.println("Instance initialized with " + properties.size() + " properties");
+        // DUPLICATE BLOCK END
     }
     
     public InstanceInitializerDups() {
-        // Constructor can be empty, initialization happens in instance initializers
+        // Constructor with another duplicate
+        properties.put("version", "1.0");
+        properties.put("active", true);
+        properties.put("timeout", 30);
+        instanceId = "instance-" + System.currentTimeMillis();
+        createdAt = System.currentTimeMillis();
+        System.out.println("Instance initialized with " + properties.size() + " properties");
     }
     
-    public InstanceInitializerDups(String name) {
-        this.user.setName(name);
+    public void reset() {
+        // Method with duplicate code
+        properties.put("version", "1.0");
+        properties.put("active", true);
+        properties.put("timeout", 30);
+        instanceId = "instance-" + System.currentTimeMillis();
+        createdAt = System.currentTimeMillis();
+        System.out.println("Instance initialized with " + properties.size() + " properties");
     }
     
-    public User getUser() {
-        return user;
+    public Map<String, Object> getProperties() {
+        return properties;
     }
     
-    public Database getDatabase() {
-        return database;
-    }
-    
-    public String getSessionId() {
-        return sessionId;
+    public String getInstanceId() {
+        return instanceId;
     }
 }

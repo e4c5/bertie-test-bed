@@ -17,14 +17,14 @@ public class Service {
     }
 
     void processUser1() {
-        User user = repository.findById("123");
+        User user = repository.findById(123L);
         user.setActive(true);
         user.save();
         logger.info("User processed");
     }
 
     void processUser2() {
-        User user = repository.findById("456");
+        User user = repository.findById(456L);
         user.setActive(true);
         user.save();
         logger.info("User processed");

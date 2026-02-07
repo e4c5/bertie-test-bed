@@ -1,85 +1,64 @@
 package com.raditha.bertie.testbed.containers;
 
-import com.raditha.bertie.testbed.model.User;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
+import java.util.function.Function;
 
 /**
- * Test class for detecting duplicate code in block-bodied lambda expressions.
- * Contains intentional duplicates that should be detected and refactored.
+ * Test file for duplicate detection in lambda expression blocks.
+ * Demonstrates LAMBDA container type support.
  */
 public class LambdaBlockDups {
     
-    private List<User> users;
-    
-    public LambdaBlockDups(List<User> users) {
-        this.users = users;
-    }
-    
-    public void processActiveUsers() {
-        // Lambda with duplicate validation logic
-        Consumer<User> processor = (user) -> {
-            // Duplicate Block 1
-            if (user == null) {
-                throw new IllegalArgumentException("User cannot be null");
-            }
-            user.setStatus("PROCESSING");
-            user.setLastModified(System.currentTimeMillis());
-            user.validate();
+    public void processWithLambdas() {
+        List<String> items = Arrays.asList("apple", "banana", "cherry");
+        
+        // Lambda #1 with block body containing duplicate code
+        Consumer<String> processor1 = (item) -> {
+            // DUPLICATE BLOCK START
+            String processed = item.toUpperCase();
+            int length = processed.length();
+            String result = processed + "_" + length;
+            System.out.println("Processed: " + result);
+            // DUPLICATE BLOCK END
         };
         
-        users.stream()
-            .filter(u -> "ACTIVE".equals(u.getStatus()))
-            .forEach(processor);
-    }
-    
-    public void processPendingUsers() {
-        // Another lambda with similar validation
-        Consumer<User> processor = (user) -> {
-            // Duplicate Block 2 (similar to Block 1)
-            if (user == null) {
-                throw new IllegalArgumentException("User cannot be null");
-            }
-            user.setStatus("REVIEWED");
-            user.setLastModified(System.currentTimeMillis());
-            user.validate();
+        // Lambda #2 with block body containing duplicate code
+        Consumer<String> processor2 = (item) -> {
+            // DUPLICATE BLOCK START
+            String processed = item.toUpperCase();
+            int length = processed.length();
+            String result = processed + "_" + length;
+            System.out.println("Processed: " + result);
+            // DUPLICATE BLOCK END
         };
         
-        users.stream()
-            .filter(u -> "PENDING".equals(u.getStatus()))
-            .forEach(processor);
+        items.forEach(processor1);
+        items.forEach(processor2);
     }
     
-    public List<User> filterByPredicate() {
-        // Lambda with duplicate filtering logic
-        Predicate<User> isValid = (user) -> {
-            // Duplicate Block 3
-            if (user.getName() == null || user.getName().isEmpty()) {
-                return false;
-            }
-            if (user.getEmail() == null || user.getEmail().isEmpty()) {
-                return false;
-            }
-            return user.getStatus() != null;
+    public Function<String, String> createFormatter() {
+        // Lambda with duplicate code
+        return (input) -> {
+            String processed = input.toUpperCase();
+            int length = processed.length();
+            String result = processed + "_" + length;
+            System.out.println("Processed: " + result);
+            return result;
         };
-        
-        return users.stream().filter(isValid).toList();
     }
     
-    public List<User> filterByAlternate() {
-        // Another lambda with similar filtering
-        Predicate<User> isComplete = (user) -> {
-            // Duplicate Block 4 (similar to Block 3)
-            if (user.getName() == null || user.getName().isEmpty()) {
-                return false;
-            }
-            if (user.getEmail() == null || user.getEmail().isEmpty()) {
-                return false;
-            }
-            return user.getTag() != null;
-        };
-        
-        return users.stream().filter(isComplete).toList();
+    public void processInMethod(String item) {
+        // Method with duplicate code
+        String processed = item.toUpperCase();
+        int length = processed.length();
+        String result = processed + "_" + length;
+        System.out.println("Processed: " + result);
+    }
+    
+    public static void main(String[] args) {
+        LambdaBlockDups test = new LambdaBlockDups();
+        test.processWithLambdas();
     }
 }

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,32 +25,32 @@ class ReturnValueServicesTest {
         Repository<User> repo = mock(Repository.class);
         repository = repo;
         mockUser = mock(User.class);
-        when(repository.findById(anyString())).thenReturn(mockUser);
+        when(repository.findById(anyLong())).thenReturn(mockUser);
     }
 
     @Test
     void testServiceWithNoReturnProcessUser1() {
         ServiceWithNoReturn service = new ServiceWithNoReturn(repository);
-        assertDoesNotThrow(() -> service.processUser1("123"));
+        assertDoesNotThrow(() -> service.processUser1(123L));
     }
 
     @Test
     void testServiceWithNoReturnProcessUser2() {
         ServiceWithNoReturn service = new ServiceWithNoReturn(repository);
-        assertDoesNotThrow(() -> service.processUser2("456"));
+        assertDoesNotThrow(() -> service.processUser2(456L));
     }
 
     @Test
     void testServiceWithNoReturnProcessUser3() {
         ServiceWithNoReturn service = new ServiceWithNoReturn(repository);
-        assertDoesNotThrow(() -> service.processUser3("789"));
+        assertDoesNotThrow(() -> service.processUser3(789L));
     }
 
     @Test
     void testServiceWithSimpleReturnGetUserName1() {
         when(mockUser.getName()).thenReturn("John Doe");
         ServiceWithSimpleReturn service = new ServiceWithSimpleReturn(repository);
-        String name = service.getUserName1("123");
+        String name = service.getUserName1(123L);
         assertEquals("John Doe", name);
     }
 
@@ -57,7 +58,7 @@ class ReturnValueServicesTest {
     void testServiceWithSimpleReturnGetUserEmail2() {
         when(mockUser.getEmail()).thenReturn("john@example.com");
         ServiceWithSimpleReturn service = new ServiceWithSimpleReturn(repository);
-        String email = service.getUserEmail2("456");
+        String email = service.getUserEmail2(456L);
         assertEquals("john@example.com", email);
     }
 
@@ -65,7 +66,7 @@ class ReturnValueServicesTest {
     void testServiceWithSimpleReturnIsUserActive3() {
         when(mockUser.isActive()).thenReturn(true);
         ServiceWithSimpleReturn service = new ServiceWithSimpleReturn(repository);
-        boolean active = service.isUserActive3("789");
+        boolean active = service.isUserActive3(789L);
         assertTrue(active);
     }
 

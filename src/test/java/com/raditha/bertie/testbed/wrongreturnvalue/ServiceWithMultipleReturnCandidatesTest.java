@@ -35,9 +35,9 @@ class ServiceWithMultipleReturnCandidatesTest {
         finalUser.setName("John");
         finalUser.setEmail("john@example.com");
         
-        when(repository.findById("123")).thenReturn(finalUser);
+        when(repository.findById(123L)).thenReturn(finalUser);
         
-        String result = service.processUserAndReturnCorrectOne("123");
+        String result = service.processUserAndReturnCorrectOne(123L);
         
         // Must return finalUser's name, not tempUser's name!
         assertEquals("John is now active", result, 
@@ -53,9 +53,9 @@ class ServiceWithMultipleReturnCandidatesTest {
         finalUser.setName("Jane");
         finalUser.setEmail("jane@example.com");
         
-        when(repository.findById("456")).thenReturn(finalUser);
+        when(repository.findById(456L)).thenReturn(finalUser);
         
-        String result = service.processAnotherUserAndReturnCorrectOne("456");
+        String result = service.processAnotherUserAndReturnCorrectOne(456L);
         
         // Must return finalUser's email, not tempUser's!
         assertEquals("jane@example.com was updated", result,
@@ -70,9 +70,9 @@ class ServiceWithMultipleReturnCandidatesTest {
         finalUser.setId("789");
         finalUser.setName("Bob");
         
-        when(repository.findById("789")).thenReturn(finalUser);
+        when(repository.findById(789L)).thenReturn(finalUser);
         
-        String result = service.processThirdUserAndReturnCorrectOne("789");
+        String result = service.processThirdUserAndReturnCorrectOne(789L);
         
         // Must return finalUser's ID, not "temp"!
         assertEquals("User 789 processed", result,
@@ -86,13 +86,13 @@ class ServiceWithMultipleReturnCandidatesTest {
         User user = new User();
         user.setId("100");
         
-        when(repository.findById("100")).thenReturn(user);
+        when(repository.findById(100L)).thenReturn(user);
         
         // Should complete without error
-        assertDoesNotThrow(() -> service.processAndDontReturn1("100"));
+        assertDoesNotThrow(() -> service.processAndDontReturn1(100L));
         
         // Should have saved the user
-        verify(repository).findById("100");
+        verify(repository).findById(100L);
     }
     
     @Test
@@ -100,13 +100,13 @@ class ServiceWithMultipleReturnCandidatesTest {
         User user = new User();
         user.setId("200");
         
-        when(repository.findById("200")).thenReturn(user);
+        when(repository.findById(200L)).thenReturn(user);
         
         // Should complete without error
-        assertDoesNotThrow(() -> service.processAndDontReturn2("200"));
+        assertDoesNotThrow(() -> service.processAndDontReturn2(200L));
         
         // Should have saved the user
-        verify(repository).findById("200");
+        verify(repository).findById(200L);
     }
     
     @Test
@@ -126,13 +126,13 @@ class ServiceWithMultipleReturnCandidatesTest {
         user3.setId("3");
         user3.setName("User3");
         
-        when(repository.findById("1")).thenReturn(user1);
-        when(repository.findById("2")).thenReturn(user2);
-        when(repository.findById("3")).thenReturn(user3);
+        when(repository.findById(1L)).thenReturn(user1);
+        when(repository.findById(2L)).thenReturn(user2);
+        when(repository.findById(3L)).thenReturn(user3);
         
-        String result1 = service.processUserAndReturnCorrectOne("1");
-        String result2 = service.processAnotherUserAndReturnCorrectOne("2");
-        String result3 = service.processThirdUserAndReturnCorrectOne("3");
+        String result1 = service.processUserAndReturnCorrectOne(1L);
+        String result2 = service.processAnotherUserAndReturnCorrectOne(2L);
+        String result3 = service.processThirdUserAndReturnCorrectOne(3L);
         
         // All results must be different
         assertNotEquals(result1, result2);

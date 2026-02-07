@@ -1,91 +1,64 @@
 package com.raditha.bertie.testbed.containers;
 
-import com.raditha.bertie.testbed.model.User;
-import com.raditha.bertie.testbed.model.Logger;
-
 /**
- * Test class for detecting duplicate code in inner class methods.
- * Tests that duplicate detection works in non-static inner classes.
+ * Test file for duplicate detection in inner class methods.
+ * Demonstrates inner class container support.
  */
 public class InnerClassMethodDups {
     
-    private Logger logger;
+    private String outerField = "outer";
     
-    public InnerClassMethodDups() {
-        this.logger = new Logger("InnerClass");
+    public void outerMethod() {
+        // DUPLICATE BLOCK START - In outer method
+        String data = "test data";
+        int count = data.length();
+        String result = data.toUpperCase() + "_" + count;
+        System.out.println("Result: " + result);
+        // DUPLICATE BLOCK END
     }
     
-    // Inner class with duplicate methods
-    public class UserValidator {
+    // Inner class
+    public class InnerProcessor {
+        private String innerField = "inner";
         
-        public boolean validateActive(User user) {
-            // Duplicate Block 1
-            if (user == null) {
-                logger.error("Validation failed");
-                return false;
-            }
-            if (user.getName() == null || user.getName().isEmpty()) {
-                logger.error("Validation failed");
-                return false;
-            }
-            if (user.getEmail() == null || user.getEmail().isEmpty()) {
-                logger.error("Validation failed");
-                return false;
-            }
-            return "ACTIVE".equals(user.getStatus());
+        public void innerMethod() {
+            // DUPLICATE BLOCK START - In inner class method
+            String data = "test data";
+            int count = data.length();
+            String result = data.toUpperCase() + "_" + count;
+            System.out.println("Result: " + result);
+            // DUPLICATE BLOCK END
         }
         
-        public boolean validatePending(User user) {
-            // Duplicate Block 2 (similar to Block 1)
-            if (user == null) {
-                logger.error("Validation failed");
-                return false;
-            }
-            if (user.getName() == null || user.getName().isEmpty()) {
-                logger.error("Validation failed");
-                return false;
-            }
-            if (user.getEmail() == null || user.getEmail().isEmpty()) {
-                logger.error("Validation failed");
-                return false;
-            }
-            return "PENDING".equals(user.getStatus());
+        public void anotherInnerMethod() {
+            // Another duplicate in inner class
+            String data = "test data";
+            int count = data.length();
+            String result = data.toUpperCase() + "_" + count;
+            System.out.println("Result: " + result);
         }
     }
     
-    // Another inner class with similar duplicates
-    public class UserProcessor {
-        
-        public void processForActivation(User user) {
-            // Duplicate Block 3
-            user.setStatus("PROCESSING");
-            user.setLastModified(System.currentTimeMillis());
-            user.validate();
-            logger.info("User processed");
-        }
-        
-        public void processForDeactivation(User user) {
-            // Duplicate Block 4 (similar to Block 3)
-            user.setStatus("DEACTIVATING");
-            user.setLastModified(System.currentTimeMillis());
-            user.validate();
-            logger.info("User processed");
-        }
-        
-        public void processForDeletion(User user) {
-            // Duplicate Block 5 (similar to Block 3)
-            user.setStatus("DELETING");
-            user.setLastModified(System.currentTimeMillis());
-            user.validate();
-            logger.info("User processed");
+    // Another inner class
+    public class AnotherInner {
+        public void process() {
+            // Duplicate in second inner class
+            String data = "test data";
+            int count = data.length();
+            String result = data.toUpperCase() + "_" + count;
+            System.out.println("Result: " + result);
         }
     }
     
-    public UserValidator getValidator() {
-        return new UserValidator();
-    }
-    
-    public UserProcessor getProcessor() {
-        return new UserProcessor();
+    public static void main(String[] args) {
+        InnerClassMethodDups outer = new InnerClassMethodDups();
+        outer.outerMethod();
+        
+        InnerProcessor inner = outer.new InnerProcessor();
+        inner.innerMethod();
+        inner.anotherInnerMethod();
+        
+        AnotherInner another = outer.new AnotherInner();
+        another.process();
     }
 }

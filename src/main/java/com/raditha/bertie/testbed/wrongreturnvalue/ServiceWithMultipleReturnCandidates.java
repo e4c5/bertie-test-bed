@@ -28,7 +28,7 @@ public class ServiceWithMultipleReturnCandidates {
     /**
      * Has TWO User variables - must return the one that's used later (finalUser)
      */
-    public String processUserAndReturnCorrectOne(String userId) {
+    public String processUserAndReturnCorrectOne(long userId) {
         User tempUser = new User();
         tempUser.setId("temp");
         tempUser.setName("Temporary");
@@ -44,7 +44,7 @@ public class ServiceWithMultipleReturnCandidates {
     /**
      * Similar duplicate - also has TWO User variables
      */
-    public String processAnotherUserAndReturnCorrectOne(String userId) {
+    public String processAnotherUserAndReturnCorrectOne(long userId) {
         User tempUser = new User();
         tempUser.setId("temp");
         tempUser.setName("Temporary");
@@ -60,7 +60,7 @@ public class ServiceWithMultipleReturnCandidates {
     /**
      * Yet another duplicate with same pattern
      */
-    public String processThirdUserAndReturnCorrectOne(String userId) {
+    public String processThirdUserAndReturnCorrectOne(long userId) {
         User tempUser = new User();
         tempUser.setId("temp");
         tempUser.setName("Temporary");
@@ -80,7 +80,7 @@ public class ServiceWithMultipleReturnCandidates {
     /**
      * Duplicate where NO variable is used after (should return void)
      */
-    public void processAndDontReturn1(String userId) {
+    public void processAndDontReturn1(long userId) {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();
@@ -91,7 +91,7 @@ public class ServiceWithMultipleReturnCandidates {
     /**
      * Another duplicate where NO variable is used after
      */
-    public void processAndDontReturn2(String userId) {
+    public void processAndDontReturn2(long userId) {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();

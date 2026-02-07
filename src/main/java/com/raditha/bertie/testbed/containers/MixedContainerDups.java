@@ -1,91 +1,97 @@
 package com.raditha.bertie.testbed.containers;
 
-import com.raditha.bertie.testbed.model.User;
-import com.raditha.bertie.testbed.model.Logger;
-import java.util.List;
-import java.util.function.Predicate;
+import java.util.function.Consumer;
 
 /**
- * Test class for detecting duplicate code across different container types.
- * This is the most complex test case - duplicates appear in methods, lambdas,
- * static initializers, and instance initializers.
+ * Test file for duplicate detection across multiple container types.
+ * Demonstrates cross-container duplicate detection and refactoring.
  */
 public class MixedContainerDups {
     
-    private static Logger staticLogger;
-    private Logger instanceLogger;
-    private List<User> users;
+    private static String staticConfig;
+    private String instanceConfig;
     
-    // Static initializer with duplicate validation
+    // Static initializer with duplicate
     static {
-        staticLogger = new Logger("Static");
-        // Duplicate Block 1
-        if (staticLogger == null) {
-            throw new IllegalStateException("Logger initialization failed");
-        }
-        staticLogger.setLevel("INFO");
-        staticLogger.enable();
+        // DUPLICATE BLOCK START
+        String prefix = "CONFIG_";
+        int version = 1;
+        String suffix = "_FINAL";
+        String config = prefix + version + suffix;
+        System.out.println("Configuration: " + config);
+        // DUPLICATE BLOCK END
+        staticConfig = "initialized";
     }
     
-    // Instance initializer with similar validation
+    // Instance initializer with duplicate
     {
-        instanceLogger = new Logger("Instance");
-        // Duplicate Block 2 (similar to Block 1)
-        if (instanceLogger == null) {
-            throw new IllegalStateException("Logger initialization failed");
-        }
-        instanceLogger.setLevel("DEBUG");
-        instanceLogger.enable();
+        // DUPLICATE BLOCK START
+        String prefix = "CONFIG_";
+        int version = 1;
+        String suffix = "_FINAL";
+        String config = prefix + version + suffix;
+        System.out.println("Configuration: " + config);
+        // DUPLICATE BLOCK END
+        instanceConfig = "initialized";
     }
     
-    public MixedContainerDups(List<User> users) {
-        this.users = users;
-        // Duplicate Block 3 (in constructor, similar to initializers)
-        if (users == null) {
-            throw new IllegalStateException("Logger initialization failed");
-        }
-        users.forEach(u -> u.validate());
+    public MixedContainerDups() {
+        // Constructor with duplicate
+        String prefix = "CONFIG_";
+        int version = 1;
+        String suffix = "_FINAL";
+        String config = prefix + version + suffix;
+        System.out.println("Configuration: " + config);
     }
     
-    public void processUsers() {
-        // Method with duplicate validation
-        // Duplicate Block 4 (in method)
-        if (users == null || users.isEmpty()) {
-            staticLogger.error("No users to process");
-            return;
-        }
-        
-        // Lambda with similar validation
-        Predicate<User> validator = (user) -> {
-            // Duplicate Block 5 (in lambda)
-            if (user == null || user.getName() == null) {
-                staticLogger.error("No users to process");
-                return false;
-            }
-            return user.getStatus() != null;
+    public void instanceMethod() {
+        // Instance method with duplicate
+        String prefix = "CONFIG_";
+        int version = 1;
+        String suffix = "_FINAL";
+        String config = prefix + version + suffix;
+        System.out.println("Configuration: " + config);
+    }
+    
+    public static void staticMethod() {
+        // Static method with duplicate
+        String prefix = "CONFIG_";
+        int version = 1;
+        String suffix = "_FINAL";
+        String config = prefix + version + suffix;
+        System.out.println("Configuration: " + config);
+    }
+    
+    public void useLambda() {
+        Consumer<String> consumer = (input) -> {
+            // Lambda with duplicate
+            String prefix = "CONFIG_";
+            int version = 1;
+            String suffix = "_FINAL";
+            String config = prefix + version + suffix;
+            System.out.println("Configuration: " + config);
         };
-        
-        users.stream().filter(validator).forEach(user -> {
-            // Duplicate Block 6 (in nested lambda)
-            user.setStatus("PROCESSED");
-            user.setLastModified(System.currentTimeMillis());
-            user.validate();
-        });
+        consumer.accept("test");
     }
     
-    public void updateUsers() {
-        // Another method with similar validation
-        // Duplicate Block 7 (in method)
-        if (users == null || users.isEmpty()) {
-            staticLogger.error("No users to process");
-            return;
+    // Inner class with duplicate
+    public class InnerClass {
+        public void innerMethod() {
+            String prefix = "CONFIG_";
+            int version = 1;
+            String suffix = "_FINAL";
+            String config = prefix + version + suffix;
+            System.out.println("Configuration: " + config);
         }
+    }
+    
+    public static void main(String[] args) {
+        MixedContainerDups test = new MixedContainerDups();
+        test.instanceMethod();
+        staticMethod();
+        test.useLambda();
         
-        users.forEach(user -> {
-            // Duplicate Block 8 (in lambda)
-            user.setStatus("UPDATED");
-            user.setLastModified(System.currentTimeMillis());
-            user.validate();
-        });
+        InnerClass inner = test.new InnerClass();
+        inner.innerMethod();
     }
 }

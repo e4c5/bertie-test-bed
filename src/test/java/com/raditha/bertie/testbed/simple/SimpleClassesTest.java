@@ -6,6 +6,7 @@ import com.raditha.bertie.testbed.model.Logger;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -57,7 +58,7 @@ class SimpleClassesTest {
         Logger logger = mock(Logger.class);
         User user = mock(User.class);
 
-        when(repository.findById(anyString())).thenReturn(user);
+        when(repository.findById(anyLong())).thenReturn(user);
 
         Service service = new Service(repository, logger);
         assertDoesNotThrow(() -> service.processUser1());
@@ -70,7 +71,7 @@ class SimpleClassesTest {
         Logger logger = mock(Logger.class);
         User user = mock(User.class);
 
-        when(repository.findById(anyString())).thenReturn(user);
+        when(repository.findById(anyLong())).thenReturn(user);
 
         Service service = new Service(repository, logger);
         assertDoesNotThrow(() -> service.processUser2());

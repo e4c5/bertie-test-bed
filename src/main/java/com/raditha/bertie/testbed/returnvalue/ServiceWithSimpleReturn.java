@@ -20,7 +20,7 @@ public class ServiceWithSimpleReturn {
     /**
      * DUPLICATE 1: Creates user, uses it after
      */
-    public String getUserName1(String userId) {
+    public String getUserName1(long userId) {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();
@@ -32,7 +32,7 @@ public class ServiceWithSimpleReturn {
     /**
      * DUPLICATE 2: Same pattern
      */
-    public String getUserEmail2(String userId) {
+    public String getUserEmail2(long userId) {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();
@@ -44,7 +44,7 @@ public class ServiceWithSimpleReturn {
     /**
      * DUPLICATE 3: Same pattern
      */
-    public boolean isUserActive3(String userId) {
+    public boolean isUserActive3(long userId) {
         User user = repository.findById(userId);
         user.setActive(true);
         user.save();
