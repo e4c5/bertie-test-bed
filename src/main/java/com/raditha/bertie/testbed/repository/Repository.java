@@ -1,10 +1,25 @@
 package com.raditha.bertie.testbed.repository;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
- * Generic repository interface.
+ * Repository interface with methods needed for container duplicate tests.
+ * This file adds the findAll() method to the existing Repository class.
  */
 public interface Repository<T> {
-    T findById(String id);
-    T save(T entity);
-    void delete(String id);
+
+    void save(T entity);
+
+    T findById(Long id);
+
+    void delete(T entity);
+
+    // ADDED METHOD BELOW
+
+    /**
+     * Finds all entities.
+     * @return List of all entities
+     */
+    List<T> findAll();
 }
