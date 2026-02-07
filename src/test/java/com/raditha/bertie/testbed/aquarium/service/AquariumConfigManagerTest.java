@@ -350,6 +350,66 @@ class AquariumConfigManagerTest {
             
             assertThat(sorted).isNotEmpty();
         }
+
+        @Test
+        @DisplayName("Lambda comparator should sort same weight fish by name")
+        void testLambdaComparatorSameWeightDifferentName() {
+            Comparator<FishDTO> comparator = manager.createFishComparator();
+            
+            FishDTO f1 = new FishDTO();
+            f1.setSpecies("Goldfish");
+            f1.setWeight(10.0);
+            f1.setName("Alpha");
+            
+            FishDTO f2 = new FishDTO();
+            f2.setSpecies("Goldfish");
+            f2.setWeight(10.0);
+            f2.setName("Beta");
+            
+            // Alpha < Beta
+            assertThat(comparator.compare(f1, f2)).isLessThan(0);
+        }
+
+        @Test
+        @DisplayName("Alternate lambda comparator should follow correct sorting logic")
+        void testAlternateLambdaComparatorLogic() {
+            Comparator<FishDTO> comparator = manager.createAlternateFishComparator();
+            
+            // 1. Null handling
+            assertThatThrownBy(() -> comparator.compare(null, testFish1))
+                    .isInstanceOf(IllegalArgumentException.class);
+
+            // 2. Different species
+            FishDTO betta = new FishDTO();
+            betta.setSpecies("Betta");
+            FishDTO goldfish = new FishDTO();
+            goldfish.setSpecies("Goldfish");
+            assertThat(comparator.compare(betta, goldfish)).isNotEqualTo(0);
+
+            // 3. Same species, different weight
+            FishDTO light = new FishDTO();
+            light.setSpecies("Goldfish");
+            light.setWeight(10.0);
+            
+            FishDTO heavy = new FishDTO();
+            heavy.setSpecies("Goldfish");
+            heavy.setWeight(20.0);
+            
+            assertThat(comparator.compare(light, heavy)).isLessThan(0);
+
+            // 4. Same species, same weight, different price
+            FishDTO cheap = new FishDTO();
+            cheap.setSpecies("Goldfish");
+            cheap.setWeight(10.0);
+            cheap.setPrice(10.0);
+            
+            FishDTO expensive = new FishDTO();
+            expensive.setSpecies("Goldfish");
+            expensive.setWeight(10.0);
+            expensive.setPrice(50.0);
+            
+            assertThat(comparator.compare(cheap, expensive)).isLessThan(0);
+        }
     }
 
     // ========================================================================
@@ -424,6 +484,66 @@ class AquariumConfigManagerTest {
                     .collect(Collectors.toList());
             
             assertThat(sorted).hasSize(3);
+        }
+
+        @Test
+        @DisplayName("Anonymous comparator should sort same tank fish by ID")
+        void testAnonymousComparatorSameTankDifferentId() {
+            Comparator<FishDTO> comparator = manager.createAnonymousFishComparator();
+            
+            FishDTO f1 = new FishDTO();
+            f1.setSpecies("Goldfish");
+            f1.setTankId(1L);
+            f1.setFishId(100L);
+            
+            FishDTO f2 = new FishDTO();
+            f2.setSpecies("Goldfish");
+            f2.setTankId(1L);
+            f2.setFishId(200L);
+            
+            assertThat(comparator.compare(f1, f2)).isLessThan(0);
+        }
+
+        @Test
+        @DisplayName("Alternate anonymous comparator should follow correct sorting logic")
+        void testAlternateAnonymousComparatorLogic() {
+            Comparator<FishDTO> comparator = manager.createAlternateAnonymousComparator();
+            
+            // 1. Null handling
+            assertThatThrownBy(() -> comparator.compare(testFish1, null))
+                    .isInstanceOf(IllegalArgumentException.class);
+
+            // 2. Different species
+            FishDTO betta = new FishDTO();
+            betta.setSpecies("Betta");
+            FishDTO goldfish = new FishDTO();
+            goldfish.setSpecies("Goldfish");
+            
+            assertThat(comparator.compare(betta, goldfish)).isNotEqualTo(0);
+
+            // 3. Same species, different price
+             FishDTO cheap = new FishDTO();
+            cheap.setSpecies("Goldfish");
+            cheap.setPrice(5.0);
+            
+            FishDTO expensive = new FishDTO();
+            expensive.setSpecies("Goldfish");
+            expensive.setPrice(10.0);
+            
+            assertThat(comparator.compare(cheap, expensive)).isLessThan(0);
+
+            // 4. Same species, same price, different weight
+            FishDTO light = new FishDTO();
+            light.setSpecies("Goldfish");
+            light.setPrice(10.0);
+            light.setWeight(5.0);
+            
+            FishDTO heavy = new FishDTO();
+            heavy.setSpecies("Goldfish");
+            heavy.setPrice(10.0);
+            heavy.setWeight(10.0);
+            
+            assertThat(comparator.compare(light, heavy)).isLessThan(0);
         }
     }
 
